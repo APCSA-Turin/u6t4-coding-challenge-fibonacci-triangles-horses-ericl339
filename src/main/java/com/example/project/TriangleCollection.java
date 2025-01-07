@@ -29,12 +29,21 @@ public class TriangleCollection {
     // PRECONDITION: numTriangles >= 2
     public TriangleCollection(int numTriangles, int startX, int startY) {
       /* IMPLEMENT ME */
+      collection = new Triangle[numTriangles];
+      for (int i = 0; i < numTriangles; i++) {
+        collection[i] = new Triangle(new Point(-startX, 0), new Point(0, startY), new Point(startX - i, 0));
+      }
     }
   
     // Calculate and return the sum of the perimeters of
     // all Triangles in the collection
     public double totalPerimeter() {
       /* IMPLEMENT ME */
+      double total = 0;
+      for (int i = 0; i < collection.length; i++) {
+        total += collection[i].perimeter();
+      }
+      return total;
     }
   
     // adds increment to both the x and y coordinates of each of the
@@ -42,6 +51,12 @@ public class TriangleCollection {
     // ADD GETTER AND SETTER METHODS TO OTHER CLASSES AS NECESSARY
     public void shiftTriangles(int increment) {
       /* IMPLEMENT ME */
+      for (int i = 0; i < collection.length; i++) {
+        for (int j = 0; j < 3; j ++) {
+          collection[i].getPoint(j).setX(collection[i].getPoint(j).getX() + increment);
+          collection[i].getPoint(j).setY(collection[i].getPoint(j).getY() + increment);
+        }
+      }
     }
   
     // returns a String that contains each Triangle in the 
@@ -54,6 +69,20 @@ public class TriangleCollection {
     //  [(1, 5), (5, 12), (7, 5)]"
     public String triangleCollectionInfo() {
       /* IMPLEMENT ME */
+      String info = "";
+      for (int i = 0; i < collection.length; i ++) {
+        info += "[";
+        for (int j = 0; j < 2; j ++) {
+          info += collection[i].getPoint(j).pointInfo() + ", ";
+        }
+        info += collection[i].getPoint(2).pointInfo() + "]\n";
+      }
+      return info;
+    }
+
+    public static void main(String[] args) {
+      TriangleCollection collection = new TriangleCollection(6, 4, 7);
+      System.out.println(collection.triangleCollectionInfo());
     }
   }
   
